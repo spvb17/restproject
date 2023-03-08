@@ -39,7 +39,8 @@ public class AuthenticationController {
             String username = requestDto.getUsername();
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, requestDto.getPassword()));
             UserEntity user = userService.findByUsername(username);
-            if (user == null) {
+            if (user == null)
+            {
                 throw new UsernameNotFoundException("User with username: " + username + " was not found!");
             }
 

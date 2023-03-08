@@ -60,10 +60,10 @@ public class UserService
 
     public UserEntity findById(Long id) throws NotFoundException
     {
-        return userRepository.findById(id).orElseThrow(() -> new NotFoundException("This user doesn't exist!"));
+        return userRepository.findById(id).orElseThrow(() -> new NotFoundException("User with id "+id+" doesn't exist!"));
     }
 
-    public List<UserEntity> findAll()
+    public List<UserEntity> getAllUsers()
     {
         return userRepository.findAll();
     }
