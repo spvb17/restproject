@@ -1,5 +1,6 @@
 package com.example.backendfinalproject.controllers;
 
+import com.example.backendfinalproject.dto.BookDto;
 import com.example.backendfinalproject.exceptions.NotFoundException;
 import com.example.backendfinalproject.models.BookEntity;
 import com.example.backendfinalproject.models.UserEntity;
@@ -48,8 +49,14 @@ public class AdministrationController
     }
 
     @PostMapping("books/new")
-    public void addBook(@RequestBody BookEntity bookEntity)
+    public void addBook(@RequestBody BookDto bookDto)
     {
-        bookService.addBook(bookEntity);
+        bookService.addBook(bookService.convertToEntity(bookDto));
+    }
+
+    @DeleteMapping("books/{id}/delete")
+    public void deleteBook(@PathVariable("id") Long id)
+    {
+        bookService.deleteBook(id);
     }
 }
