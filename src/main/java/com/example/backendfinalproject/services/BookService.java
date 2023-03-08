@@ -43,10 +43,8 @@ public class BookService
         bookRepository.deleteById(id);
     }
 
-    public BookEntity updateBook(Long id, BookDto bookDto)
+    public BookEntity updateBook(BookEntity bookEntity)
     {
-        BookEntity bookEntity = convertToEntity(bookDto);
-        bookEntity.setId(id);
         bookRepository.save(bookEntity);
         return bookEntity;
     }

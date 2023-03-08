@@ -1,12 +1,12 @@
 package com.example.backendfinalproject.controllers;
 
-import com.example.backendfinalproject.dto.BookDto;
 import com.example.backendfinalproject.exceptions.NotFoundException;
 import com.example.backendfinalproject.models.BookEntity;
 import com.example.backendfinalproject.models.UserEntity;
 import com.example.backendfinalproject.services.BookService;
 import com.example.backendfinalproject.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -77,9 +77,9 @@ public class AdministrationController
         bookService.addBook(bookEntity);
     }
 
-    @PatchMapping("/books/{id}/update")
-    public BookEntity updateBook(@PathVariable("id") Long id, @RequestBody BookDto bookDto)
+    @PatchMapping("/books/update")
+    public BookEntity updateBook(@RequestBody BookEntity bookEntity)
     {
-        return bookService.updateBook(id, bookDto);
+        return bookService.updateBook(bookEntity);
     }
 }
