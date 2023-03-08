@@ -36,6 +36,23 @@ public class AdministrationController
         return userService.getAllUsers();
     }
 
+    @PatchMapping("/users/{id}/deleted_account")
+    public UserEntity statusToDeleted(@PathVariable("id") Long id) throws NotFoundException
+    {
+        return userService.statusToDeleted(id);
+    }
+
+    @PatchMapping("/users/{id}/non_active_account")
+    public UserEntity statusToNonActive(@PathVariable("id") Long id) throws NotFoundException
+    {
+        return userService.statusToNonActive(id);
+    }
+
+    @PatchMapping("/users/{id}/active_account")
+    public UserEntity statusToActive(@PathVariable("id") Long id) throws NotFoundException {
+        return userService.statusToActive(id);
+    }
+
     @GetMapping("/books")
     public List<BookEntity> getAllBooks()
     {
@@ -48,15 +65,21 @@ public class AdministrationController
         return bookService.getBook(id);
     }
 
-    @PostMapping("books/new")
-    public void addBook(@RequestBody BookDto bookDto)
-    {
-        bookService.addBook(bookService.convertToEntity(bookDto));
-    }
-
-    @DeleteMapping("books/{id}/delete")
+    @DeleteMapping("/books/{id}/delete")
     public void deleteBook(@PathVariable("id") Long id)
     {
         bookService.deleteBook(id);
+    }
+
+    @PostMapping("books/new")
+    public void addBook(@RequestBody BookEntity bookEntity)
+    {
+        bookService.addBook(bookEntity);
+    }
+
+    @PatchMapping("/books/{id}/update")
+    public BookEntity updateBook(@PathVariable("id") Long id, @RequestBody BookDto bookDto)
+    {
+        return bookService.updateBook(id, bookDto);
     }
 }

@@ -1,5 +1,7 @@
 package com.example.backendfinalproject.dto;
 
+import com.example.backendfinalproject.models.GenreEntity;
+
 import java.util.List;
 
 public class BookDto

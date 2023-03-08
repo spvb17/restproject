@@ -43,6 +43,14 @@ public class BookService
         bookRepository.deleteById(id);
     }
 
+    public BookEntity updateBook(Long id, BookDto bookDto)
+    {
+        BookEntity bookEntity = convertToEntity(bookDto);
+        bookEntity.setId(id);
+        bookRepository.save(bookEntity);
+        return bookEntity;
+    }
+
     public BookEntity convertToEntity(BookDto bookDto)
     {
         return modelMapper.map(bookDto, BookEntity.class);

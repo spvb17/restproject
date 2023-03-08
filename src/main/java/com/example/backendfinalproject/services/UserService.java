@@ -7,7 +7,6 @@ import com.example.backendfinalproject.models.RoleEntity;
 import com.example.backendfinalproject.models.UserEntity;
 import com.example.backendfinalproject.repositories.RoleRepository;
 import com.example.backendfinalproject.repositories.UserRepository;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -67,5 +66,29 @@ public class UserService
     public List<UserEntity> getAllUsers()
     {
         return userRepository.findAll();
+    }
+
+    public UserEntity statusToDeleted(Long id) throws NotFoundException
+    {
+        UserEntity userEntity = userRepository.findById(id).orElse(findById(id));
+        userEntity.setAccountStatus(AccountStatus.DELETED);
+        userRepository.save(userEntity);
+        return userEntity;
+    }
+
+    public UserEntity statusToNonActive(Long id) throws NotFoundException
+    {
+        UserEntity userEntity = userRepository.findById(id).orElse(findById(id));
+        userEntity.setAccountStatus(AccountStatus.NOT_ACTIVE);
+        userRepository.save(userEntity);
+        return userEntity;
+    }
+
+    public UserEntity statusToActive(Long id) throws NotFoundException
+    {
+        UserEntity userEntity = userRepository.findById(id).orElse(findById(id));
+        userEntity.setAccountStatus(AccountStatus.ACTIVE);
+        userRepository.save(userEntity);
+        return userEntity;
     }
 }
