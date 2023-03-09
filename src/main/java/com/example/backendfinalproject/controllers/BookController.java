@@ -1,6 +1,7 @@
 package com.example.backendfinalproject.controllers;
 
 import com.example.backendfinalproject.dto.BookDto;
+import com.example.backendfinalproject.exceptions.NotFoundException;
 import com.example.backendfinalproject.services.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -28,8 +29,8 @@ public class BookController
     }
 
     @PatchMapping("/{id}/add_to_card")
-    public void addBookToCard(@PathVariable("id") Long id, Authentication authentication)
+    public void addBookToCard(@PathVariable("id") Long id, Authentication authentication) throws NotFoundException
     {
-
+        bookService.addToUserCard(id, authentication.getName());
     }
 }

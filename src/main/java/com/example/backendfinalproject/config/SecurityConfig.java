@@ -17,6 +17,7 @@ import org.springframework.security.web.SecurityFilterChain;
 public class SecurityConfig
 {
     private final JwtTokenProvider jwtTokenProvider;
+
     @Autowired
     public SecurityConfig(JwtTokenProvider jwtTokenProvider)
     {

@@ -1,5 +1,6 @@
 package com.example.backendfinalproject.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -15,11 +16,14 @@ public class UserEntity
     private String lastName;
     private String email;
     private String password;
+
     @Enumerated(EnumType.STRING)
     private AccountStatus accountStatus;
+
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name="user_role", joinColumns = @JoinColumn(name="user_entity_id"), inverseJoinColumns = @JoinColumn(name="role_entity_id"))
     private List<RoleEntity> roles;
+
 
     public UserEntity(){}
     public UserEntity(Long id, String username, String firstName, String lastName, String email, String password, AccountStatus accountStatus, List<RoleEntity> roles)

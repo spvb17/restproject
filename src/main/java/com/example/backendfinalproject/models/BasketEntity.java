@@ -8,10 +8,9 @@ import java.util.List;
 public class BasketEntity
 {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name="user_entity_id")
     private UserEntity user;
 
@@ -40,5 +39,13 @@ public class BasketEntity
 
     public void setUser(UserEntity user) {
         this.user = user;
+    }
+
+    public List<BookEntity> getBooks() {
+        return books;
+    }
+
+    public void setBooks(List<BookEntity> books) {
+        this.books = books;
     }
 }

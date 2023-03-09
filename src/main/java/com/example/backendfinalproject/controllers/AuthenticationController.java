@@ -2,6 +2,7 @@ package com.example.backendfinalproject.controllers;
 
 import com.example.backendfinalproject.dto.LoginRequestDto;
 import com.example.backendfinalproject.dto.UserEntityDto;
+import com.example.backendfinalproject.exceptions.AlreadyExistException;
 import com.example.backendfinalproject.models.UserEntity;
 import com.example.backendfinalproject.security.jwt.JwtTokenProvider;
 import com.example.backendfinalproject.services.UserService;
@@ -39,11 +40,6 @@ public class AuthenticationController {
             String username = requestDto.getUsername();
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, requestDto.getPassword()));
             UserEntity user = userService.findByUsername(username);
-            if (user == null)
-            {
-                throw new UsernameNotFoundException("User with username: " + username + " was not found!");
-            }
-
             String token = jwtTokenProvider.createToken(username, user.getRoles());
             Map<String, String> response = new HashMap<>();
             response.put("username", username);
@@ -55,8 +51,7 @@ public class AuthenticationController {
     }
 
     @PostMapping("/registration")
-    public ResponseEntity<?> registration(@RequestBody UserEntityDto userEntityDto)
-    {
+    public ResponseEntity<?> registration(@RequestBody UserEntityDto userEntityDto) throws AlreadyExistException {
         UserEntity user = userService.register(userEntityDto);
         String token = jwtTokenProvider.createToken(user.getUsername(), user.getRoles());
         Map<String, String> response = new HashMap<>();
