@@ -1,6 +1,7 @@
 package com.example.backendfinalproject.controllers;
 
 import com.example.backendfinalproject.dto.BookDto;
+import com.example.backendfinalproject.exceptions.AlreadyExistException;
 import com.example.backendfinalproject.exceptions.NotFoundException;
 import com.example.backendfinalproject.services.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,12 @@ public class BookController
         this.bookService = bookService;
     }
 
+    @GetMapping("/{id}")
+    public BookDto getBook(@PathVariable("id") Long id) throws NotFoundException
+    {
+        return bookService.convertToDto(bookService.getBook(id));
+    }
+
     @GetMapping()
     public List<BookDto> getBooks()
     {
@@ -29,8 +36,14 @@ public class BookController
     }
 
     @PatchMapping("/{id}/add_to_card")
-    public void addBookToCard(@PathVariable("id") Long id, Authentication authentication) throws NotFoundException
+    public void addBookToCard(@PathVariable("id") Long id, Authentication authentication) throws NotFoundException, AlreadyExistException
     {
         bookService.addToUserCard(id, authentication.getName());
+    }
+
+    @PatchMapping("/{id}/delete_from_card")
+    public void deleteFromCard(@PathVariable("id") Long id, Authentication authentication)
+    {
+        bookService.deleteFromUserCard(id, authentication.getName());
     }
 }

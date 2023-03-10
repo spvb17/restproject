@@ -61,11 +61,6 @@ public class UserService
         return userEntity;
     }
 
-    public List<UserEntity> getAll()
-    {
-        return userRepository.findAll();
-    }
-
     public UserEntity findByUsername(String username)
     {
         return userRepository.findByUsername(username);
@@ -103,5 +98,10 @@ public class UserService
         userEntity.setAccountStatus(AccountStatus.ACTIVE);
         userRepository.save(userEntity);
         return userEntity;
+    }
+
+    public void save(UserEntity userEntity)
+    {
+        userRepository.save(userEntity);
     }
 }

@@ -12,7 +12,6 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -51,7 +50,8 @@ public class AuthenticationController {
     }
 
     @PostMapping("/registration")
-    public ResponseEntity<?> registration(@RequestBody UserEntityDto userEntityDto) throws AlreadyExistException {
+    public ResponseEntity<?> registration(@RequestBody UserEntityDto userEntityDto) throws AlreadyExistException
+    {
         UserEntity user = userService.register(userEntityDto);
         String token = jwtTokenProvider.createToken(user.getUsername(), user.getRoles());
         Map<String, String> response = new HashMap<>();
