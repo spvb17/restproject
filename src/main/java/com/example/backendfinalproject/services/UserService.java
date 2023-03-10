@@ -1,6 +1,6 @@
 package com.example.backendfinalproject.services;
 
-import com.example.backendfinalproject.dto.UserEntityDto;
+import com.example.backendfinalproject.dto.UserDto;
 import com.example.backendfinalproject.exceptions.AlreadyExistException;
 import com.example.backendfinalproject.exceptions.NotFoundException;
 import com.example.backendfinalproject.models.*;
@@ -32,9 +32,9 @@ public class UserService
     }
 
 
-    public UserEntity register(UserEntityDto userEntityDto) throws AlreadyExistException
+    public UserEntity register(UserDto userDto)
     {
-        if(findByUsername(userEntityDto.getUsername())!=null)
+        if(findByUsername(userDto.getUsername())!=null)
         {
             throw new AlreadyExistException("This username is not available!");
         }
@@ -42,11 +42,11 @@ public class UserService
         RoleEntity role = roleRepository.findByName("ROLE_USER");
         List<RoleEntity> userRoles = new ArrayList<>();
         userRoles.add(role);
-        userEntity.setUsername(userEntityDto.getUsername());
-        userEntity.setFirstName(userEntityDto.getFirstName());
-        userEntity.setLastName(userEntityDto.getLastName());
-        userEntity.setEmail(userEntityDto.getEmail());
-        userEntity.setPassword(passwordEncoder.encode(userEntityDto.getPassword()));
+        userEntity.setUsername(userDto.getUsername());
+        userEntity.setFirstName(userDto.getFirstName());
+        userEntity.setLastName(userDto.getLastName());
+        userEntity.setEmail(userDto.getEmail());
+        userEntity.setPassword(passwordEncoder.encode(userDto.getPassword()));
         userEntity.setRoles(userRoles);
         userEntity.setAccountStatus(AccountStatus.ACTIVE);
         userRepository.save(userEntity);
@@ -66,7 +66,7 @@ public class UserService
         return userRepository.findByUsername(username);
     }
 
-    public UserEntity findById(Long id) throws NotFoundException
+    public UserEntity findById(Long id)
     {
         return userRepository.findById(id).orElseThrow(() -> new NotFoundException("User with id "+id+" doesn't exist!"));
     }
@@ -76,7 +76,7 @@ public class UserService
         return userRepository.findAll();
     }
 
-    public UserEntity statusToDeleted(Long id) throws NotFoundException
+    public UserEntity statusToDeleted(Long id)
     {
         UserEntity userEntity = userRepository.findById(id).orElse(findById(id));
         userEntity.setAccountStatus(AccountStatus.DELETED);
@@ -84,7 +84,7 @@ public class UserService
         return userEntity;
     }
 
-    public UserEntity statusToNonActive(Long id) throws NotFoundException
+    public UserEntity statusToNonActive(Long id)
     {
         UserEntity userEntity = userRepository.findById(id).orElse(findById(id));
         userEntity.setAccountStatus(AccountStatus.NOT_ACTIVE);
@@ -92,7 +92,7 @@ public class UserService
         return userEntity;
     }
 
-    public UserEntity statusToActive(Long id) throws NotFoundException
+    public UserEntity statusToActive(Long id)
     {
         UserEntity userEntity = userRepository.findById(id).orElse(findById(id));
         userEntity.setAccountStatus(AccountStatus.ACTIVE);

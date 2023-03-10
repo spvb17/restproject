@@ -2,6 +2,7 @@ package com.example.backendfinalproject.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
 
 import java.util.List;
 
@@ -11,9 +12,16 @@ public class BookEntity
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @NotNull(message = "Name field should not be null")
     private String name;
+    @Min(value = 0, message = "Price should not be with minus sign")
     private double price;
+    @Min(value = 0, message = "Rating field should not be with minus sign")
+    @Max(value = 10, message = "Max rating for book is 10")
     private double rating;
+    @NotNull(message = "Book author should not be null")
+    @Size(min = 1, max = 100, message = "Author field length should be between 1 and 100")
     private String author;
     private String image;
 

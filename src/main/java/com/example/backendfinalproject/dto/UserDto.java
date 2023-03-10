@@ -4,21 +4,26 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
-public class UserEntityDto
+public class UserDto
 {
     @NotNull(message = "Username field should not be null")
+    @NotNull(message = "Username field should not be null")
     private String username;
+    @NotNull(message = "First name field should not be null")
     @Size(min = 1, max = 50, message = "First name field length must be between 1 and 50")
     private String firstName;
+    @NotNull(message = "Last name field should not be null")
     @Size(min = 1, max = 50, message = "Last name field length must be between 1 and 50")
     private String lastName;
+    @NotNull(message = "Email field should not be null")
     @Email(message = "Entered email does not match the email pattern")
     private String email;
+    @NotNull(message = "Password field should not be null")
     @Size(min = 4, message = "Password should contain at least 4 signs")
     private String password;
 
-    public UserEntityDto(){}
-    public UserEntityDto(String username, String firstName, String lastName, String email, String password)
+    public UserDto(){}
+    public UserDto(String username, String firstName, String lastName, String email, String password)
     {
         this.username = username;
         this.firstName = firstName;

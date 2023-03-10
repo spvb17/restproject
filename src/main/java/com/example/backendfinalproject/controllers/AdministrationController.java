@@ -1,10 +1,10 @@
 package com.example.backendfinalproject.controllers;
 
-import com.example.backendfinalproject.exceptions.NotFoundException;
 import com.example.backendfinalproject.models.BookEntity;
 import com.example.backendfinalproject.models.UserEntity;
 import com.example.backendfinalproject.services.BookService;
 import com.example.backendfinalproject.services.UserService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,7 +24,7 @@ public class AdministrationController
     }
 
     @GetMapping("/users/{id}")
-    public UserEntity getUserById(@PathVariable("id") Long id) throws NotFoundException
+    public UserEntity getUserById(@PathVariable("id") Long id)
     {
         return userService.findById(id);
     }
@@ -36,19 +36,20 @@ public class AdministrationController
     }
 
     @PatchMapping("/users/{id}/deleted_account")
-    public UserEntity statusToDeleted(@PathVariable("id") Long id) throws NotFoundException
+    public UserEntity statusToDeleted(@PathVariable("id") Long id)
     {
         return userService.statusToDeleted(id);
     }
 
     @PatchMapping("/users/{id}/non_active_account")
-    public UserEntity statusToNonActive(@PathVariable("id") Long id) throws NotFoundException
+    public UserEntity statusToNonActive(@PathVariable("id") Long id)
     {
         return userService.statusToNonActive(id);
     }
 
     @PatchMapping("/users/{id}/active_account")
-    public UserEntity statusToActive(@PathVariable("id") Long id) throws NotFoundException {
+    public UserEntity statusToActive(@PathVariable("id") Long id)
+    {
         return userService.statusToActive(id);
     }
 
@@ -59,7 +60,7 @@ public class AdministrationController
     }
 
     @GetMapping("/books/{id}")
-    public BookEntity getBook(@PathVariable("id") Long id) throws NotFoundException
+    public BookEntity getBook(@PathVariable("id") Long id)
     {
         return bookService.getBook(id);
     }
@@ -71,7 +72,7 @@ public class AdministrationController
     }
 
     @PostMapping("books/new")
-    public void addBook(@RequestBody BookEntity bookEntity)
+    public void addBook(@RequestBody @Valid BookEntity bookEntity)
     {
         bookService.addBook(bookEntity);
     }

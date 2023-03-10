@@ -1,11 +1,11 @@
 package com.example.backendfinalproject.controllers;
 
 import com.example.backendfinalproject.dto.LoginRequestDto;
-import com.example.backendfinalproject.dto.UserEntityDto;
-import com.example.backendfinalproject.exceptions.AlreadyExistException;
+import com.example.backendfinalproject.dto.UserDto;
 import com.example.backendfinalproject.models.UserEntity;
 import com.example.backendfinalproject.security.jwt.JwtTokenProvider;
 import com.example.backendfinalproject.services.UserService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -50,9 +50,9 @@ public class AuthenticationController {
     }
 
     @PostMapping("/registration")
-    public ResponseEntity<?> registration(@RequestBody UserEntityDto userEntityDto) throws AlreadyExistException
+    public ResponseEntity<?> registration(@RequestBody @Valid UserDto userDto)
     {
-        UserEntity user = userService.register(userEntityDto);
+        UserEntity user = userService.register(userDto);
         String token = jwtTokenProvider.createToken(user.getUsername(), user.getRoles());
         Map<String, String> response = new HashMap<>();
         response.put("token", token);

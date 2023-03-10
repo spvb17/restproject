@@ -1,20 +1,31 @@
 package com.example.backendfinalproject.dto;
 
 import com.example.backendfinalproject.models.GenreEntity;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 import java.util.List;
 
 public class BookDto
 {
+    @NotNull(message = "Name field should not be null")
     private String name;
+    @Min(value = 0, message = "Price should not be with minus sign")
     private double price;
+    @Min(value = 0, message = "Rating field should not be with minus sign")
+    @Max(value = 10, message = "Max rating for book is 10")
     private double rating;
+    @NotNull(message = "Book author should not be null")
+    @Size(min = 1, max = 100, message = "Author field length should be between 1 and 100")
     private String author;
     private String image;
     private List<GenreDto> genres;
 
     public BookDto(){}
-    public BookDto(String name, double price, double rating, String author, String image, List<GenreDto> genres) {
+    public BookDto(String name, double price, double rating, String author, String image, List<GenreDto> genres)
+    {
         this.name = name;
         this.price = price;
         this.rating = rating;

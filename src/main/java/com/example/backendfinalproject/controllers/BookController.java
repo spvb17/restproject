@@ -24,7 +24,7 @@ public class BookController
     }
 
     @GetMapping("/{id}")
-    public BookDto getBook(@PathVariable("id") Long id) throws NotFoundException
+    public BookDto getBook(@PathVariable("id") Long id)
     {
         return bookService.convertToDto(bookService.getBook(id));
     }
@@ -36,7 +36,7 @@ public class BookController
     }
 
     @PatchMapping("/{id}/add_to_card")
-    public void addBookToCard(@PathVariable("id") Long id, Authentication authentication) throws NotFoundException, AlreadyExistException
+    public void addBookToCard(@PathVariable("id") Long id, Authentication authentication)
     {
         bookService.addToUserCard(id, authentication.getName());
     }

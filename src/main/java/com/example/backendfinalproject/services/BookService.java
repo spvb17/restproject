@@ -36,7 +36,7 @@ public class BookService
         return bookRepository.findAll();
     }
 
-    public BookEntity getBook(Long id) throws NotFoundException
+    public BookEntity getBook(Long id)
     {
         return bookRepository.findById(id).orElseThrow(()->new NotFoundException("Book with id "+id+" doesn't exist!"));
     }
@@ -57,7 +57,8 @@ public class BookService
         return bookEntity;
     }
 
-    public void addToUserCard(Long id, String username) throws NotFoundException, AlreadyExistException {
+    public void addToUserCard(Long id, String username)
+    {
         UserEntity userEntity = userService.findByUsername(username);
         BasketEntity basketEntity = basketRepository.findById(userEntity.getId()).get();
         BookEntity bookEntity = getBook(id);
