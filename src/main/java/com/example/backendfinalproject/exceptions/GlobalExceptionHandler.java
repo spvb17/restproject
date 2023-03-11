@@ -1,7 +1,6 @@
 package com.example.backendfinalproject.exceptions;
 
 import com.example.backendfinalproject.security.jwt.JwtAuthenticationException;
-import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
