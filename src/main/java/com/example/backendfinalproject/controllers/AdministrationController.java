@@ -53,6 +53,12 @@ public class AdministrationController
         return userService.statusToActive(id);
     }
 
+    @PatchMapping("users/{id}/status_to_admin")
+    public void makeAdmin(@PathVariable("id") Long id)
+    {
+        userService.makeAdmin(id);
+    }
+
     @GetMapping("/books")
     public List<BookEntity> getAllBooks()
     {

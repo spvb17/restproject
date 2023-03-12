@@ -104,4 +104,14 @@ public class UserService
     {
         userRepository.save(userEntity);
     }
+
+    public void makeAdmin(Long id)
+    {
+        UserEntity userEntity = userRepository.findById(id).orElseThrow(()->new NotFoundException("This user doesn't exist"));
+        List<RoleEntity> userRoles = userEntity.getRoles();
+        RoleEntity role = roleRepository.findByName("ROLE_ADMIN");
+        userRoles.add(role);
+        userEntity.setRoles(userRoles);
+        userRepository.save(userEntity);
+    }
 }

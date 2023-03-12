@@ -5,7 +5,6 @@ import io.jsonwebtoken.*;
 import jakarta.annotation.PostConstruct;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -78,15 +77,16 @@ public class JwtTokenProvider
         return null;
     }
 
-    public boolean validateToken(String token) throws JwtAuthenticationException
+    public boolean validateToken(String token)
     {
-        try {
-            Jws<Claims> claims = Jwts.parserBuilder().setSigningKey(secret).build().parseClaimsJws(token);
-            return !claims.getBody().getExpiration().before(new Date());
-        } catch (JwtException | IllegalArgumentException e) {
-            throw new JwtAuthenticationException("JWT token is expired or invalid");
+        try{
+            Jwts.parserBuilder().setSigningKey(secret).build().parseClaimsJws(token);
+        } catch(JwtException e) {
+            return false;
         }
+        return true;
     }
+
 
     private List<String> getRoleNames(List<RoleEntity> userRoles)
     {

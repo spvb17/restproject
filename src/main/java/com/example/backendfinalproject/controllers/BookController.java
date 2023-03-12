@@ -1,8 +1,6 @@
 package com.example.backendfinalproject.controllers;
 
 import com.example.backendfinalproject.dto.BookDto;
-import com.example.backendfinalproject.exceptions.AlreadyExistException;
-import com.example.backendfinalproject.exceptions.NotFoundException;
 import com.example.backendfinalproject.services.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;

@@ -1,6 +1,5 @@
 package com.example.backendfinalproject.exceptions;
 
-import com.example.backendfinalproject.security.jwt.JwtAuthenticationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -37,12 +36,5 @@ public class GlobalExceptionHandler
     {
         IncorrectData incorrectData = new IncorrectData(HttpStatus.BAD_REQUEST.value(), e.getFieldError().getDefaultMessage());
         return new ResponseEntity<>(incorrectData, HttpStatus.BAD_REQUEST);
-    }
-
-    @ExceptionHandler
-    public ResponseEntity<IncorrectData> handleException(JwtAuthenticationException e)
-    {
-        IncorrectData incorrectData = new IncorrectData(HttpStatus.UNAUTHORIZED.value(), e.getMessage());
-        return new ResponseEntity<>(incorrectData, HttpStatus.UNAUTHORIZED);
     }
 }

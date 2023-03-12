@@ -1,5 +1,6 @@
 package com.example.backendfinalproject.config;
 
+import com.example.backendfinalproject.security.jwt.JwtAuthenticationEntryPoint;
 import com.example.backendfinalproject.security.jwt.JwtConfigurer;
 import com.example.backendfinalproject.security.jwt.JwtTokenProvider;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,11 +18,13 @@ import org.springframework.security.web.SecurityFilterChain;
 public class SecurityConfig
 {
     private final JwtTokenProvider jwtTokenProvider;
+    private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
 
     @Autowired
-    public SecurityConfig(JwtTokenProvider jwtTokenProvider)
+    public SecurityConfig(JwtTokenProvider jwtTokenProvider, JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint)
     {
         this.jwtTokenProvider = jwtTokenProvider;
+        this.jwtAuthenticationEntryPoint = jwtAuthenticationEntryPoint;
     }
 
     private static final String ADMIN_ENDPOINT = "/api/v1/admin/**";
@@ -42,6 +45,8 @@ public class SecurityConfig
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .apply(new JwtConfigurer(jwtTokenProvider))
+                .and()
+                .exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint)
                 .and()
                 .httpBasic().disable()
                 .build();

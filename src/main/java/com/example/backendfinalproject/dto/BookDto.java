@@ -1,6 +1,5 @@
 package com.example.backendfinalproject.dto;
 
-import com.example.backendfinalproject.models.GenreEntity;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
